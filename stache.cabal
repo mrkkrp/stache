@@ -5,9 +5,9 @@ license:         MIT
 license-file:    LICENSE
 maintainer:      Mark Karpov <markkarpov92@gmail.com>
 author:          Mark Karpov <markkarpov92@gmail.com>
-tested-with:     ghc ==9.8.4 ghc ==9.10.3 ghc ==9.12.1
-homepage:        https://github.com/stackbuilders/stache
-bug-reports:     https://github.com/stackbuilders/stache/issues
+tested-with:     ghc ==9.10.3 ghc ==9.12.4 ghc ==9.14.1
+homepage:        https://github.com/mrkkrp/stache
+bug-reports:     https://github.com/mrkkrp/stache/issues
 synopsis:        Mustache templates for Haskell
 description:     Mustache templates for Haskell.
 category:        Text
@@ -25,7 +25,7 @@ extra-doc-files:
 
 source-repository head
     type:     git
-    location: https://github.com/stackbuilders/stache.git
+    location: https://github.com/mrkkrp/stache.git
 
 flag dev
     description: Turn on development settings.

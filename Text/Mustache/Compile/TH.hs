@@ -4,7 +4,7 @@
 
 -- |
 -- Module      :  Text.Mustache.Compile.TH
--- Copyright   :  © 2016–present Stack Builders
+-- Copyright   :  © 2016–present Mark Karpov
 -- License     :  BSD 3 clause
 --
 -- Maintainer  :  Mark Karpov <markkarpov92@gmail.com>

@@ -131,13 +131,15 @@ outputIndent = asks rcIndent >>= outputRaw . buildIndent
 {-# INLINE outputIndent #-}
 
 -- | Output piece of strict 'Text' with added indentation.
+-- TODO: Maybe we need to rework the outputIndented implementation
+--       to add the indentation without the use of \n
 outputIndented :: Text -> Render ()
 outputIndented txt = do
   level <- asks rcIndent
   lnode <- asks rcLastNode
   let f x = outputRaw (T.replace "\n" ("\n" <> buildIndent level) x)
   if lnode && T.isSuffixOf "\n" txt
-    then f (T.init txt) >> outputRaw "\n"
+    then f (T.init txt) >> outputRaw "\n" >> outputIndent -- TODO: This solves the issue with the indentation. However, now the programs output does not end with newline
     else f txt
 {-# INLINE outputIndented #-}
 

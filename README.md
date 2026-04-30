@@ -3,7 +3,7 @@
 [![Hackage](https://img.shields.io/hackage/v/stache.svg?style=flat)](https://hackage.haskell.org/package/stache)
 [![Stackage Nightly](http://stackage.org/package/stache/badge/nightly)](http://stackage.org/nightly/package/stache)
 [![Stackage LTS](http://stackage.org/package/stache/badge/lts)](http://stackage.org/lts/package/stache)
-[![CI](https://github.com/stackbuilders/stache/actions/workflows/ci.yaml/badge.svg)](https://github.com/stackbuilders/stache/actions/workflows/ci.yaml)
+[![CI](https://github.com/stackbuilders/stache/actions/workflows/ci.yaml/badge.svg)](https://github.com/mrkkrp/stache/actions/workflows/ci.yaml)
 
 This is a Haskell implementation of Mustache templates. The implementation
 conforms to the version 1.1.3 of the official [Mustache
@@ -74,11 +74,3 @@ helpful:
 ## License
 
 MIT, see [the LICENSE file](LICENSE).
-
-## Contributing
-
-Do you want to contribute to this project? Please take a look at our [contributing guideline](/docs/CONTRIBUTING.md) to know how you can help us build it.
-
----
-<img src="https://www.stackbuilders.com/media/images/Sb-supports.original.png" alt="Stack Builders" width="50%"></img>
-[Check out our libraries](https://github.com/stackbuilders/) | [Join our team](https://www.stackbuilders.com/join-us/)

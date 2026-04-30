@@ -6,7 +6,7 @@
 
 -- |
 -- Module      :  Text.Mustache.Type
--- Copyright   :  © 2016–present Stack Buliders
+-- Copyright   :  © 2016–present Mark Karpov
 -- License     :  BSD 3 clause
 --
 -- Maintainer  :  Mark Karpov <markkarpov92@gmail.com>

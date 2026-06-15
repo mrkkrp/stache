@@ -1,4 +1,10 @@
+## Unreleased
+
+* Fix indentation inheritance in partials. [Issue
+  72](https://github.com/mrkkrp/stache/issues/72).
+
 ## Stache 2.3.4
+
 * Support GHC 9.6 thanks to @ysangkok
 * Fix infinite loop caused by unclosed sections thanks to @ernius
 

@@ -37,6 +37,7 @@ library
         Text.Mustache.Compile.TH
         Text.Mustache.Parser
         Text.Mustache.Render
+        Text.Mustache.Render.Internal
         Text.Mustache.Type
 
     default-language: GHC2021

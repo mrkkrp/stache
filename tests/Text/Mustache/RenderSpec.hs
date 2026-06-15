@@ -152,6 +152,121 @@ spec = describe "renderMustache" $ do
                 ]
        in renderMustache template Null
             `shouldBe` "   one\n   two\n   three*"
+  context "when rendering a partial with list sections" $ do
+    it "maintains indentation for all iterations in a partial with sections" $
+      let template =
+            Template "test" $
+              M.fromList
+                [ ("test", [TextBlock "Subnets:\n", Partial "myPartial" (Just $ mkPos 3)]),
+                  ( "myPartial",
+                    [ Section
+                        (key "subnets")
+                        [ TextBlock "- ",
+                          EscapedVar (Key []),
+                          TextBlock "\n\"Test string\"\n"
+                        ]
+                    ]
+                  )
+                ]
+          value =
+            object
+              [ "subnets"
+                  .= [ "subnet-0a0a0a0a" :: Text,
+                       "subnet-0b0b0b0b",
+                       "subnet-0c0c0c0c"
+                     ]
+              ]
+       in renderMustache template value
+            `shouldBe` "Subnets:\n  - subnet-0a0a0a0a\n  \"Test string\"\n  - subnet-0b0b0b0b\n  \"Test string\"\n  - subnet-0c0c0c0c\n  \"Test string\"\n"
+  context "when rendering nested partials with list sections" $ do
+    it "maintains indentation through multiple levels of nested partials with sections" $
+      let template =
+            Template "test" $
+              M.fromList
+                [ ("test", [TextBlock "Configuration:\n", Partial "level1" (Just $ mkPos 3)]),
+                  ( "level1",
+                    [ TextBlock "Services:\n",
+                      Partial "level2" (Just $ mkPos 3)
+                    ]
+                  ),
+                  ( "level2",
+                    [ Section
+                        (key "services")
+                        [ TextBlock "- name: ",
+                          EscapedVar (key "name"),
+                          TextBlock "\n  port: ",
+                          EscapedVar (key "port"),
+                          TextBlock "\n"
+                        ]
+                    ]
+                  )
+                ]
+          value =
+            object
+              [ "services"
+                  .= [ object ["name" .= ("web" :: Text), "port" .= (8080 :: Int)],
+                       object ["name" .= ("api" :: Text), "port" .= (3000 :: Int)],
+                       object ["name" .= ("db" :: Text), "port" .= (5432 :: Int)]
+                     ]
+              ]
+       in renderMustache template value
+            `shouldBe` "Configuration:\n  Services:\n    - name: web\n      port: 8080\n    - name: api\n      port: 3000\n    - name: db\n      port: 5432\n"
+    it "handles mixed content with nested partials and multiple sections" $
+      let template =
+            Template "test" $
+              M.fromList
+                [ ( "test",
+                    [ TextBlock "Project:\n",
+                      Section
+                        (key "project")
+                        [ TextBlock "  Name: ",
+                          EscapedVar (key "name"),
+                          TextBlock "\n",
+                          Partial "components" (Just $ mkPos 3)
+                        ]
+                    ]
+                  ),
+                  ( "components",
+                    [ TextBlock "Components:\n",
+                      Section
+                        (key "components")
+                        [ Partial "component-detail" (Just $ mkPos 3)
+                        ]
+                    ]
+                  ),
+                  ( "component-detail",
+                    [ TextBlock "- ",
+                      EscapedVar (key "type"),
+                      TextBlock ":\n",
+                      Section
+                        (key "items")
+                        [ TextBlock "  * ",
+                          EscapedVar (Key []),
+                          TextBlock "\n"
+                        ]
+                    ]
+                  )
+                ]
+          value =
+            object
+              [ "project"
+                  .= [ object
+                         [ "name" .= ("MyApp" :: Text),
+                           "components"
+                             .= [ object
+                                    [ "type" .= ("Frontend" :: Text),
+                                      "items" .= ["React" :: Text, "TypeScript", "CSS"]
+                                    ],
+                                  object
+                                    [ "type" .= ("Backend" :: Text),
+                                      "items" .= ["Node.js" :: Text, "Express", "MongoDB"]
+                                    ]
+                                ]
+                         ]
+                     ]
+              ]
+       in renderMustache template value
+            `shouldBe` "Project:\n  Name: MyApp\n  Components:\n    - Frontend:\n      * React\n      * TypeScript\n      * CSS\n    - Backend:\n      * Node.js\n      * Express\n      * MongoDB\n"
   context "when rendering a nested partial" $
     it "renders outer partial correctly" $
       let template =

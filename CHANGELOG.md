@@ -3,6 +3,8 @@
 * Fix indentation inheritance in partials. [Issue
   72](https://github.com/mrkkrp/stache/issues/72).
 
+* Changing license back to BSD 3 clause.
+
 ## Stache 2.3.4
 
 * Support GHC 9.6 thanks to @ysangkok

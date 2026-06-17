@@ -73,4 +73,6 @@ helpful:
 
 ## License
 
-MIT, see [the LICENSE file](LICENSE).
+Copyright © 2016–present Mark Karpov
+
+Distributed under BSD 3 clause license.

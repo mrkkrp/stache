@@ -41,6 +41,12 @@ tests:
     expected: |
       Hello, world!
 
+  - name: No Re-interpolation
+    desc: Interpolated tag output should not be re-interpolated.
+    data: { template: '{{planet}}', planet: 'Earth' }
+    template: '{{template}}: {{planet}}'
+    expected: '{{planet}}: Earth'
+
   - name: HTML Escaping
     desc: Basic interpolation should be HTML escaped.
     data: { forbidden: '& " < >' }
@@ -100,6 +106,24 @@ tests:
     data: { power: 1.210 }
     template: '"{{&power}} jiggawatts!"'
     expected: '"1.21 jiggawatts!"'
+
+  - name: Basic Null Interpolation
+    desc: Nulls should interpolate as the empty string.
+    data: { cannot: null }
+    template: "I ({{cannot}}) be seen!"
+    expected: "I () be seen!"
+
+  - name: Triple Mustache Null Interpolation
+    desc: Nulls should interpolate as the empty string.
+    data: { cannot: null }
+    template: "I ({{{cannot}}}) be seen!"
+    expected: "I () be seen!"
+
+  - name: Ampersand Null Interpolation
+    desc: Nulls should interpolate as the empty string.
+    data: { cannot: null }
+    template: "I ({{&cannot}}) be seen!"
+    expected: "I () be seen!"
 
   # Context Misses
 
@@ -178,6 +202,61 @@ tests:
       b: { c: 'ERROR' }
     template: '{{#a}}{{b.c}}{{/a}}'
     expected: ''
+
+  - name: Dotted Names are never single keys
+    desc: Dotted names shall not be parsed as single, atomic keys
+    data:
+      a.b: c
+    template: '{{a.b}}'
+    expected: ''
+
+  - name: Dotted Names - No Masking
+    desc: Dotted Names in a given context are unvavailable due to dot splitting
+    data:
+      a.b: c
+      a: { b: d }
+    template: '{{a.b}}'
+    expected: 'd'
+
+  # Implicit Iterators
+
+  - name: Implicit Iterators - Basic Interpolation
+    desc: Unadorned tags should interpolate content into the template.
+    data: "world"
+    template: |
+      Hello, {{.}}!
+    expected: |
+      Hello, world!
+
+  - name: Implicit Iterators - HTML Escaping
+    desc: Basic interpolation should be HTML escaped.
+    data: '& " < >'
+    template: |
+      These characters should be HTML escaped: {{.}}
+    expected: |
+      These characters should be HTML escaped: &amp; &quot; &lt; &gt;
+
+  - name: Implicit Iterators - Triple Mustache
+    desc: Triple mustaches should interpolate without HTML escaping.
+    data: '& " < >'
+    template: |
+      These characters should not be HTML escaped: {{{.}}}
+    expected: |
+      These characters should not be HTML escaped: & " < >
+
+  - name: Implicit Iterators - Ampersand
+    desc: Ampersand should interpolate without HTML escaping.
+    data: '& " < >'
+    template: |
+      These characters should not be HTML escaped: {{&.}}
+    expected: |
+      These characters should not be HTML escaped: & " < >
+
+  - name: Implicit Iterators - Basic Integer Interpolation
+    desc: Integers should interpolate seamlessly.
+    data: 85
+    template: '"{{.}} miles an hour!"'
+    expected: '"85 miles an hour!"'
 
   # Whitespace Sensitivity
 

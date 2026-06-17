@@ -1,9 +1,12 @@
-## Unreleased
+## Stache 2.4.0
 
 * Fix indentation inheritance in partials. [Issue
   72](https://github.com/mrkkrp/stache/issues/72).
 
-* Changing license back to BSD 3 clause.
+* Re-implement the render and add `Text.Mustache.Render.Internal` as a
+  side-effect.
+
+* Change the license back to BSD 3 clause.
 
 ## Stache 2.3.4
 

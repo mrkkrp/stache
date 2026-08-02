@@ -217,7 +217,7 @@ getContext = R $ asks rcContext
 getPrefix :: R Key
 getPrefix = R $ asks rcPrefix
 
--- | Lookup the template by its name.
+-- | Look up the template by its name.
 lookupTemplate :: PName -> R (Maybe [Node])
 lookupTemplate name = R $ asks $ \rc ->
   M.lookup name (rcTemplateCache rc)

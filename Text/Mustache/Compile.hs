@@ -7,7 +7,7 @@
 -- Stability   :  experimental
 -- Portability :  portable
 --
--- Mustache 'Template' creation from file or a 'Text' value. You don't
+-- Mustache 'Template' creation from a file or a 'Text' value. You don't
 -- usually need to import the module, because "Text.Mustache" re-exports
 -- everything you may need, import that module instead.
 module Text.Mustache.Compile
@@ -41,14 +41,14 @@ import Text.Mustache.Type
 -- directory recursively.
 --
 -- Note that each template\/partial will get an identifier which consists of
--- the name of corresponding template file with extension @.mustache@
--- dropped. This is important for e.g. selecting active template after
+-- the name of the corresponding template file with the extension @.mustache@
+-- dropped. This is important for e.g. selecting the active template after
 -- loading (the first argument).
 --
 -- The action can throw 'MustacheParserException' and the same exceptions as
 -- 'getDirectoryContents', and 'T.readFile'.
 --
--- > compileMustacheDir = complieMustacheDir' isMustacheFile
+-- > compileMustacheDir = compileMustacheDir' isMustacheFile
 compileMustacheDir ::
   (MonadIO m) =>
   -- | Which template to select after compiling
@@ -82,7 +82,7 @@ compileMustacheDir' predicate pname path =
       Template _ new <- compileMustacheFile fp
       return (Template undefined (M.union new old))
 
--- | Return a list of templates found in given a directory. The returned
+-- | Return a list of templates found in a given directory. The returned
 -- paths are absolute.
 --
 -- @since 0.2.2
@@ -135,7 +135,7 @@ compileMustacheFile path = liftIO $ do
     compile = fmap (Template pname . M.singleton pname) . parseMustache path
 
 -- | Compile a Mustache template from a 'Text' value. The cache will contain
--- only this template named according to given 'PName'.
+-- only this template, named according to the given 'PName'.
 compileMustacheText ::
   -- | How to name the template?
   PName ->

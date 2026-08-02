@@ -39,14 +39,14 @@ spec = describe "renderMustache" $ do
       (object ["foo" .= ("<html>&\"something\"</html>" :: Text)])
       `shouldBe` "<html>&\"something\"</html>"
   context "when rendering a variable" $ do
-    context "when variable does not exist" $
-      it "generates correct warning" $
-        w [EscapedVar (key "foo")] (object [])
-          `shouldBe` [MustacheVariableNotFound (key "foo")]
-    context "when variable is not non-scalar" $
-      it "generates correct warning" $
-        w [EscapedVar (key "foo")] (object ["foo" .= object []])
-          `shouldBe` [MustacheDirectlyRenderedValue (key "foo")]
+    context "when variable does not exist"
+      $ it "generates correct warning"
+      $ w [EscapedVar (key "foo")] (object [])
+        `shouldBe` [MustacheVariableNotFound (key "foo")]
+    context "when variable is not non-scalar"
+      $ it "generates correct warning"
+      $ w [EscapedVar (key "foo")] (object ["foo" .= object []])
+        `shouldBe` [MustacheDirectlyRenderedValue (key "foo")]
   context "when rendering a section" $ do
     let nodes = [Section (key "foo") [UnescapedVar (key "bar"), TextBlock "*"]]
     context "when the key is not present" $ do
@@ -66,30 +66,30 @@ spec = describe "renderMustache" $ do
           r nodes (object ["foo" .= object []]) `shouldBe` ""
         it "skips empty string" $
           r nodes (object ["foo" .= ("" :: Text)]) `shouldBe` ""
-      context "when the key is a Boolean true" $
-        it "renders the section without interpolation" $
-          r
-            [Section (key "foo") [TextBlock "brr"]]
-            (object ["foo" .= object ["bar" .= True]])
-            `shouldBe` "brr"
-      context "when the key is an object" $
-        it "uses it to render section once" $
-          r nodes (object ["foo" .= object ["bar" .= ("huh?" :: Text)]])
-            `shouldBe` "huh?*"
-      context "when the key is a singleton list" $
-        it "uses it to render section once" $
-          r nodes (object ["foo" .= object ["bar" .= ("huh!" :: Text)]])
-            `shouldBe` "huh!*"
-      context "when the key is a list of Boolean trues" $
-        it "renders the section as many times as there are elements" $
-          r
-            [Section (key "foo") [TextBlock "brr"]]
-            (object ["foo" .= [True, True]])
-            `shouldBe` "brrbrr"
-      context "when the key is a list of objects" $
-        it "renders the section many times changing context" $
-          r nodes (object ["foo" .= [object ["bar" .= x] | x <- [1 .. 4] :: [Int]]])
-            `shouldBe` "1*2*3*4*"
+      context "when the key is a Boolean true"
+        $ it "renders the section without interpolation"
+        $ r
+          [Section (key "foo") [TextBlock "brr"]]
+          (object ["foo" .= object ["bar" .= True]])
+          `shouldBe` "brr"
+      context "when the key is an object"
+        $ it "uses it to render section once"
+        $ r nodes (object ["foo" .= object ["bar" .= ("huh?" :: Text)]])
+          `shouldBe` "huh?*"
+      context "when the key is a singleton list"
+        $ it "uses it to render section once"
+        $ r nodes (object ["foo" .= object ["bar" .= ("huh!" :: Text)]])
+          `shouldBe` "huh!*"
+      context "when the key is a list of Boolean trues"
+        $ it "renders the section as many times as there are elements"
+        $ r
+          [Section (key "foo") [TextBlock "brr"]]
+          (object ["foo" .= [True, True]])
+          `shouldBe` "brrbrr"
+      context "when the key is a list of objects"
+        $ it "renders the section many times changing context"
+        $ r nodes (object ["foo" .= [object ["bar" .= x] | x <- [1 .. 4] :: [Int]]])
+          `shouldBe` "1*2*3*4*"
       context "when the key is a number" $ do
         it "renders the section" $
           r
@@ -267,9 +267,9 @@ spec = describe "renderMustache" $ do
               ]
        in renderMustache template value
             `shouldBe` "Project:\n  Name: MyApp\n  Components:\n    - Frontend:\n      * React\n      * TypeScript\n      * CSS\n    - Backend:\n      * Node.js\n      * Express\n      * MongoDB\n"
-  context "when rendering a nested partial" $
-    it "renders outer partial correctly" $
-      let template =
+  context "when rendering a nested partial"
+    $ it "renders outer partial correctly"
+    $ let template =
             Template "outer" $
               M.fromList
                 [ ("inner", [TextBlock "x"]),
@@ -277,23 +277,23 @@ spec = describe "renderMustache" $ do
                   ("outer", [Partial "middle" (Just $ mkPos 1)])
                 ]
        in renderMustache template Null `shouldBe` "x"
-  context "when using dotted keys inside a section" $
-    it "it should be equivalent to access via one more section" $
-      r
-        [ Section
-            (key "things")
-            [ EscapedVar (Key ["atts", "color"]),
-              TextBlock " == ",
-              Section (key "atts") [EscapedVar (key "color")]
-            ]
-        ]
-        ( object
-            [ "things"
-                .= [ object
-                       [ "atts"
-                           .= object ["color" .= ("blue" :: Text)]
-                       ]
-                   ]
-            ]
-        )
-        `shouldBe` "blue == blue"
+  context "when using dotted keys inside a section"
+    $ it "it should be equivalent to access via one more section"
+    $ r
+      [ Section
+          (key "things")
+          [ EscapedVar (Key ["atts", "color"]),
+            TextBlock " == ",
+            Section (key "atts") [EscapedVar (key "color")]
+          ]
+      ]
+      ( object
+          [ "things"
+              .= [ object
+                     [ "atts"
+                         .= object ["color" .= ("blue" :: Text)]
+                     ]
+                 ]
+          ]
+      )
+      `shouldBe` "blue == blue"

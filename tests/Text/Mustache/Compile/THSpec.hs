@@ -18,23 +18,23 @@ main = hspec spec
 
 spec :: Spec
 spec = do
-  describe "mustache" $
-    it "compiles template using QuasiQuotes at compile time" $
-      [TH.mustache|From Quasi-Quote!
+  describe "mustache"
+    $ it "compiles template using QuasiQuotes at compile time"
+    $ [TH.mustache|From Quasi-Quote!
 |]
-        `shouldBe` qqTemplate
-  describe "compileMustacheText" $
-    it "compiles template from text at compile time" $
-      $(TH.compileMustacheText "foo" "This is the ‘foo’.\n")
-        `shouldBe` fooTemplate
-  describe "compileMustacheFile" $
-    it "compiles template from file at compile time" $
-      $(TH.compileMustacheFile "templates/foo.mustache")
-        `shouldBe` fooTemplate
-  describe "compileMustacheDir" $
-    it "compiles templates from directory at compile time" $
-      $(TH.compileMustacheDir "foo" "templates/")
-        `shouldBe` (fooTemplate <> barTemplate)
+      `shouldBe` qqTemplate
+  describe "compileMustacheText"
+    $ it "compiles template from text at compile time"
+    $ $(TH.compileMustacheText "foo" "This is the ‘foo’.\n")
+      `shouldBe` fooTemplate
+  describe "compileMustacheFile"
+    $ it "compiles template from file at compile time"
+    $ $(TH.compileMustacheFile "templates/foo.mustache")
+      `shouldBe` fooTemplate
+  describe "compileMustacheDir"
+    $ it "compiles templates from directory at compile time"
+    $ $(TH.compileMustacheDir "foo" "templates/")
+      `shouldBe` (fooTemplate <> barTemplate)
 
 qqTemplate :: Template
 qqTemplate =

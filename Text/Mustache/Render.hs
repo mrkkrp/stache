@@ -93,7 +93,7 @@ renderNode (Partial pname mindent) = do
 ----------------------------------------------------------------------------
 -- Value lookup
 
--- | Lookup a 'Value' by its 'Key'.
+-- | Look up a 'Value' by its 'Key'.
 lookupKey :: Key -> R Value
 lookupKey (Key []) = NE.head <$> getContext
 lookupKey k = do
@@ -106,14 +106,14 @@ lookupKey k = do
     Just r ->
       return r
 
--- | Lookup a 'Value' by traversing another 'Value' using given 'Key' as "path".
+-- | Look up a 'Value' by traversing another 'Value' using the given 'Key' as a "path".
 simpleLookup ::
   -- | At least one part of the path matched, in this case we are
   -- “committed” to this lookup and cannot say “there is nothing, try
   -- other level”. This is necessary to pass the “Dotted Names—Context
   -- Precedence” test from the “interpolation.yml” spec.
   Bool ->
-  -- | The key to lookup
+  -- | The key to look up
   Key ->
   -- | Source value
   Value ->

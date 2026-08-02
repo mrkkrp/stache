@@ -28,9 +28,9 @@ spec = do
               ("e", [TextBlock "baz"])
             ]
   describe "showKey" $ do
-    context "when the key has no elements in it" $
-      it "is rendered correctly" $
-        showKey (Key []) `shouldBe` "<implicit>"
+    context "when the key has no elements in it"
+      $ it "is rendered correctly"
+      $ showKey (Key []) `shouldBe` "<implicit>"
     context "when the key has some elements" $
       it "is rendered correctly" $ do
         showKey (Key ["boo"]) `shouldBe` "boo"

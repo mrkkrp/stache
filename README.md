@@ -6,15 +6,15 @@
 [![CI](https://github.com/stackbuilders/stache/actions/workflows/ci.yaml/badge.svg)](https://github.com/mrkkrp/stache/actions/workflows/ci.yaml)
 
 This is a Haskell implementation of Mustache templates. The implementation
-conforms to the version 1.1.3 of the official [Mustache
+conforms to version 1.1.3 of the official [Mustache
 specification](https://github.com/mustache/spec). It has a minimal but
-complete API—three functions to compile templates (from directory, from
+complete API—three functions to compile templates (from a directory, from a
 file, and from lazy text) and one to render them.
 
 The implementation uses the Megaparsec parsing library to parse the
-templates which results in high-quality error messages.
+templates, which results in high-quality error messages.
 
-For rendering one only needs to create Aeson's `Value` that is used for
+For rendering one only needs to create an Aeson `Value` that is used for
 interpolation of template variables. Since the library re-uses Aeson's
 instances and most data types in the Haskell ecosystem are instances of
 classes like `Data.Aeson.ToJSON`, the process is simple for the end user.
@@ -23,8 +23,9 @@ Template Haskell helpers for compilation of templates at compile time are
 available in the `Text.Mustache.Compile.TH` module.
 
 One feature that is not currently supported is lambdas. The feature is
-marked as optional in the spec and can be emulated via processing of parsed
-template representation. The decision to drop lambdas is intentional, for
+marked as optional in the spec and can be emulated via processing of the
+parsed template representation. The decision to drop lambdas is intentional,
+for
 the sake of simplicity and better integration with Aeson.
 
 ## Usage
@@ -75,4 +76,4 @@ helpful:
 
 Copyright © 2016–present Mark Karpov
 
-Distributed under BSD 3 clause license.
+Distributed under the BSD 3-clause license.

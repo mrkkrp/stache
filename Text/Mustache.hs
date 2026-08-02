@@ -8,15 +8,15 @@
 -- Portability :  portable
 --
 -- This is a Haskell implementation of Mustache templates. The
--- implementation conforms to the version 1.1.3 of the official Mustache
+-- implementation conforms to version 1.1.3 of the official Mustache
 -- specification <https://github.com/mustache/spec>. It has a minimal but
--- complete API—three functions to compile templates (from directory, from
--- file, and from lazy text) and one to render them.
+-- complete API—three functions to compile templates (from a directory, from
+-- a file, and from lazy text) and one to render them.
 --
--- The implementation uses Megaparsec parsing library to parse the templates
--- which results in high-quality error messages.
+-- The implementation uses the Megaparsec parsing library to parse the
+-- templates, which results in high-quality error messages.
 --
--- For rendering you only need to create Aeson's 'Data.Aeson.Value' that is
+-- For rendering you only need to create an Aeson 'Data.Aeson.Value' that is
 -- used for interpolation of template variables. Since the library re-uses
 -- Aeson's instances and most data types in the Haskell ecosystem are
 -- instances of classes like 'Data.Aeson.ToJSON', the process is simple for
@@ -26,7 +26,7 @@
 -- available in the "Text.Mustache.Compile.TH" module.
 --
 -- One feature that is not currently supported is lambdas. The feature is
--- marked as optional in the spec and can be emulated via processing of
+-- marked as optional in the spec and can be emulated via processing of the
 -- parsed template representation. The decision to drop lambdas is
 -- intentional, for the sake of simplicity and better integration with
 -- Aeson.

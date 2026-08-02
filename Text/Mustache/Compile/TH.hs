@@ -80,8 +80,8 @@ compileMustacheFile path = do
   runIO (makeAbsolute path) >>= addDependentFile
   (runIO . try) (C.compileMustacheFile path) >>= handleEither
 
--- | Compile a Mustache template from 'Text' value. The cache will contain
--- only this template named according to given 'Key'.
+-- | Compile a Mustache template from a 'Text' value. The cache will contain
+-- only this template, named according to the given 'PName'.
 --
 -- This version compiles the template at compile time.
 compileMustacheText ::
@@ -102,9 +102,9 @@ compileMustacheText pname text =
 -- > foo :: Template
 -- > foo = [mustache|This is my inline {{ template }}.|]
 --
--- Name of created partial is set to @"quasi-quoted"@. You can extend cache
--- of 'Template' created this way using @('Data.Semigroup.<>')@ and so work
--- with partials as usual.
+-- The name of the created partial is set to @"quasi-quoted"@. You can extend
+-- the cache of the 'Template' created this way using @('Data.Semigroup.<>')@
+-- and so work with partials as usual.
 --
 -- @since 0.1.7
 mustache :: QuasiQuoter
@@ -116,8 +116,8 @@ mustache =
       quoteDec = error "This usage is not supported."
     }
 
--- | Given an 'Either' result return 'Right' and signal pretty-printed error
--- if we have a 'Left'.
+-- | Given an 'Either' result, return the 'Right' value and signal a
+-- pretty-printed error if we have a 'Left'.
 handleEither :: Either MustacheException Template -> Q Exp
 handleEither val =
   case val of

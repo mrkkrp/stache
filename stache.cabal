@@ -57,7 +57,7 @@ library
     if flag(dev)
         ghc-options:
             -Wall -Werror -Wredundant-constraints -Wpartial-fields
-            -Wunused-packages
+            -Wunused-packages -haddock -Winvalid-haddock
 
     else
         ghc-options: -O2 -Wall
@@ -81,7 +81,7 @@ executable stache
     if flag(dev)
         ghc-options:
             -Wall -Werror -Wredundant-constraints -Wpartial-fields
-            -Wunused-packages -Wno-unused-imports
+            -Wunused-packages -Wno-unused-imports -haddock -Winvalid-haddock
 
     else
         ghc-options: -O2 -Wall
@@ -111,7 +111,7 @@ test-suite tests
     if flag(dev)
         ghc-options:
             -Wall -Werror -Wredundant-constraints -Wpartial-fields
-            -Wunused-packages
+            -Wunused-packages -haddock -Winvalid-haddock
 
     else
         ghc-options: -O2 -Wall
@@ -136,7 +136,7 @@ test-suite mustache-spec
     if flag(dev)
         ghc-options:
             -Wall -Werror -Wredundant-constraints -Wpartial-fields
-            -Wunused-packages
+            -Wunused-packages -haddock -Winvalid-haddock
 
     else
         ghc-options: -O2 -Wall
@@ -158,7 +158,7 @@ benchmark bench
     if flag(dev)
         ghc-options:
             -Wall -Werror -Wredundant-constraints -Wpartial-fields
-            -Wunused-packages
+            -Wunused-packages -haddock -Winvalid-haddock
 
     else
         ghc-options: -O2 -Wall
